@@ -1,10 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-  <meta charset="utf-8">
-  <title>Enes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benim Arama Sayfam</title>
+    <style>
+        /* Genel Tasarım */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        /* Google Logosu (İsteğe bağlı metin hali) */
+        .logo {
+            font-size: 70px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .g { color: #4285F4; }
+        .o1 { color: #EA4335; }
+        .o2 { color: #FBBC05; }
+        .g2 { color: #4285F4; }
+        .l { color: #34A853; }
+        .e { color: #EA4335; }
+
+        /* Arama Çubuğu */
+        .search-box {
+            background: white;
+            display: flex;
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid #dfe1e5;
+            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        /* Butonlar */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .custom-button {
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            color: #3c4043;
+            font-size: 14px;
+            margin: 11px 4px;
+            padding: 10px 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .custom-button:hover {
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
+            background-color: #f8f8f8;
+            border: 1px solid #c6c6c6;
+            color: #202124;
+        }
+    </style>
 </head>
 <body>
-  <h1>Çalışıyor 🚀</h1>
+
+<div class="container">
+    <div class="logo">
+        <span class="g">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
+    </div>
+
+    <form action="https://www.google.com/search" method="GET">
+        <div class="search-box">
+            <input type="text" name="q" placeholder="Google'da ara..." autofocus required>
+        </div>
+        
+        <div class="button-container">
+            <a href="https://www.youtube.com" class="custom-button">YouTube</a>
+            <a href="https://www.github.com" class="custom-button">GitHub</a>
+            <a href="https://www.openai.com" class="custom-button">ChatGPT</a>
+            <a href="https://www.twitter.com" class="custom-button">X / Twitter</a>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>
