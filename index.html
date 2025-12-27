@@ -3,109 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benim Arama Sayfam</title>
+    <title>Glassmorphism Arama</title>
     <style>
-        /* Genel Tasarım */
+        /* 1. Arka Plan ve Temel Ayarlar */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            /* Cam etkisinin belli olması için canlı bir arka plan şart */
+            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
         }
 
-        .container {
+        /* Arka planın hareket etmesi için animasyon (isteğe bağlı) */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Arka plana yüzen bulanık daireler ekleyerek cam etkisini güçlendirelim */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.6;
+        }
+        body::before {
+            background: #8fd3f4;
+            top: 10%;
+            left: 15%;
+        }
+        body::after {
+            background: #a6c0fe;
+            bottom: 10%;
+            right: 15%;
+        }
+
+        /* 2. Ana Cam Konteyner */
+        .glass-container {
+            /* Glassmorphism'in kalbi burası */
+            background: rgba(255, 255, 255, 0.25); /* Yarı saydam beyaz */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Yumuşak gölge */
+            backdrop-filter: blur(10px); /* Arka planı bulanıklaştırma */
+            -webkit-backdrop-filter: blur(10px); /* Safari desteği */
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4); /* Parlak kenarlık */
+            
             text-align: center;
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 500px;
         }
 
-        /* Google Logosu (İsteğe bağlı metin hali) */
+        /* Logo */
         .logo {
-            font-size: 70px;
+            font-size: 50px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            /* Logoyu cama uygun hale getirmek için hafif beyazlatıyoruz */
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        .g { color: #4285F4; }
-        .o1 { color: #EA4335; }
-        .o2 { color: #FBBC05; }
-        .g2 { color: #4285F4; }
-        .l { color: #34A853; }
-        .e { color: #EA4335; }
 
-        /* Arama Çubuğu */
-        .search-box {
-            background: white;
+        /* 3. Cam Arama Çubuğu */
+        .search-box-glass {
             display: flex;
-            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.3);
             border-radius: 30px;
-            border: 1px solid #dfe1e5;
-            box-shadow: 0 1px 6px rgba(32,33,36,0.28);
+            padding: 5px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
             margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box-glass:hover, .search-box-glass:focus-within {
+             background: rgba(255, 255, 255, 0.5);
+             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .search-box input {
+        .search-box-glass input {
             flex: 1;
             border: none;
+            background: transparent;
             outline: none;
+            padding: 10px;
             font-size: 16px;
-            padding: 5px;
+            color: #333;
+        }
+        .search-box-glass input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
         }
 
-        /* Butonlar */
+        /* 4. Etkileşimli Cam Butonlar */
         .button-container {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
-            flex-wrap: wrap;
         }
 
-        .custom-button {
-            background-color: #f8f9fa;
-            border: 1px solid #f8f9fa;
-            border-radius: 4px;
-            color: #3c4043;
-            font-size: 14px;
-            margin: 11px 4px;
-            padding: 10px 16px;
-            cursor: pointer;
+        .glass-button {
             text-decoration: none;
-            transition: all 0.2s;
+            padding: 12px 24px;
+            border-radius: 15px;
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.8);
+            
+            /* Butonların kendi cam efekti */
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+
+            /* Etkileşim animasyonları için geçiş ayarı */
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .custom-button:hover {
-            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-            background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
-            background-color: #f8f8f8;
-            border: 1px solid #c6c6c6;
-            color: #202124;
+        /* Hover (Üzerine gelme) Efekti */
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.6); /* Daha parlak */
+            transform: translateY(-3px); /* Hafifçe yukarı kalkar */
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2); /* Gölge büyür */
+            color: #000;
+            border-color: rgba(255, 255, 255, 0.8);
         }
+
+        /* Active (Tıklama) Efekti */
+        .glass-button:active {
+            transform: translateY(1px) scale(0.98); /* Aşağı iner ve hafifçe küçülür */
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1); /* Gölge küçülür */
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Butonun içindeki parıltı efekti (isteğe bağlı) */
+        .glass-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        .glass-button:hover::before {
+            left: 100%;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="logo">
-        <span class="g">G</span><span class="o1">o</span><span class="o2">o</span><span class="g2">g</span><span class="l">l</span><span class="e">e</span>
-    </div>
+    <div class="glass-container">
+        <div class="logo">Google</div>
 
-    <form action="https://www.google.com/search" method="GET">
-        <div class="search-box">
-            <input type="text" name="q" placeholder="Google'da ara..." autofocus required>
-        </div>
-        
-        <div class="button-container">
-            <a href="https://www.youtube.com" class="custom-button">YouTube</a>
-            <a href="https://www.github.com" class="custom-button">GitHub</a>
-            <a href="https://www.openai.com" class="custom-button">ChatGPT</a>
-            <a href="https://www.twitter.com" class="custom-button">X / Twitter</a>
-        </div>
-    </form>
-</div>
+        <form action="https://www.google.com/search" method="GET">
+            <div class="search-box-glass">
+                <input type="text" name="q" placeholder="Web'de ara..." autofocus required>
+            </div>
+            
+            <div class="button-container">
+                <a href="https://www.youtube.com" class="glass-button">YouTube</a>
+                <a href="https://www.reddit.com" class="glass-button">Reddit</a>
+                <a href="https://chat.openai.com" class="glass-button">ChatGPT</a>
+                <a href="https://www.netflix.com" class="glass-button">Netflix</a>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>
