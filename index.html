@@ -3,161 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mavi Glass Arama</title>
+    <title>Liquid Glass Search</title>
     <style>
-        /* 1. Arka Plan: Derin Mavi Gradyan */
+        /* 1. Arka Plan ve Animasyonlu Katmanlar */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #004e92 0%, #000428 100%);
+            background: radial-gradient(circle at top right, #003366, #000428);
             overflow: hidden;
+            color: white;
         }
 
-        /* Arka plan süslemeleri (Sıvı cam etkisi için) */
-        .circle {
+        .liquid-blob {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+            filter: blur(60px);
             z-index: -1;
-            animation: move 20s infinite alternate;
+            opacity: 0.5;
+            animation: float 20s infinite alternate ease-in-out;
         }
-        .c1 { width: 400px; height: 400px; top: -10%; left: -10%; background: rgba(0, 122, 255, 0.2); }
-        .c2 { width: 300px; height: 300px; bottom: -5%; right: 5%; background: rgba(0, 255, 255, 0.1); }
-        
-        @keyframes move {
-            from { transform: translate(0, 0); }
-            to { transform: translate(50px, 100px); }
+        .blob1 { width: 500px; height: 500px; background: #0072ff; top: -10%; left: -10%; }
+        .blob2 { width: 400px; height: 400px; background: #00c6ff; bottom: -5%; right: 5%; animation-delay: -5s; }
+
+        @keyframes float {
+            from { transform: translate(0, 0) rotate(0deg); }
+            to { transform: translate(100px, 50px) rotate(30deg); }
         }
 
-        /* 2. Ana Konteyner */
-        .glass-container {
+        /* 2. Ana Cam Konteyner */
+        .glass-panel {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            padding: 40px;
+            border-radius: 40px;
+            padding: 50px;
             width: 90%;
-            max-width: 600px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            max-width: 650px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             text-align: center;
-            position: relative;
         }
 
         h1 {
-            color: white;
-            font-weight: 300;
+            font-size: 3rem;
             margin-bottom: 30px;
-            letter-spacing: 2px;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            font-weight: 200;
+            letter-spacing: 5px;
+            background: linear-gradient(to right, #fff, #8ec5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* 3. Arama Kutusu ve Öneriler */
-        .search-wrapper {
+        /* 3. Arama Çubuğu */
+        .search-area {
             position: relative;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
-        .search-box {
+        .search-input {
             width: 100%;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.2);
+            padding: 18px 30px;
+            background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50px;
             outline: none;
             color: white;
-            font-size: 18px;
-            box-sizing: border-box;
-            transition: 0.3s;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
 
-        .search-box::placeholder { color: rgba(255, 255, 255, 0.6); }
-
-        .search-box:focus {
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 20px rgba(0, 122, 255, 0.5);
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 114, 255, 0.4);
         }
 
-        /* Öneriler Listesi (Dropdown) */
+        /* 4. Cam Öneriler Listesi (Animasyonlu) */
         #suggestions {
             position: absolute;
             top: 110%;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.1); /* Şeffaf cam */
+            backdrop-filter: blur(25px); /* Yüksek bulanıklık */
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 20px;
             overflow: hidden;
-            display: none;
-            z-index: 100;
-            text-align: left;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none; /* JS ile açılacak */
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Öneriler görünür olduğunda çalışacak sınıf */
+        #suggestions.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .suggestion-item {
-            padding: 12px 25px;
+            padding: 15px 25px;
+            text-align: left;
             cursor: pointer;
-            color: #333;
-            border-bottom: 1px solid #eee;
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.2s;
         }
 
-        .suggestion-item:last-child { border: none; }
-        .suggestion-item:hover { background: #e0f0ff; }
+        .suggestion-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
 
-        /* 4. Etkileşimli Butonlar */
-        .button-group {
-            display: flex;
-            justify-content: center;
+        /* 5. Etkileşimli Butonlar */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 15px;
-            flex-wrap: wrap;
         }
 
-        .btn {
+        .glass-btn {
             text-decoration: none;
-            color: white;
-            padding: 12px 25px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            font-size: 14px;
-            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(5px);
         }
 
-        .btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-8px) scale(1.05);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .btn:active { transform: scale(0.95); }
-
+        .glass-btn:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
 
-    <div class="circle c1"></div>
-    <div class="circle c2"></div>
+    <div class="liquid-blob blob1"></div>
+    <div class="liquid-blob blob2"></div>
 
-    <div class="glass-container">
-        <h1>Google</h1>
+    <div class="glass-panel">
+        <h1>GOOGLE</h1>
         
         <form action="https://www.google.com/search" method="GET" id="searchForm">
-            <div class="search-wrapper">
-                <input type="text" name="q" class="search-box" id="searchInput" autocomplete="off" placeholder="Neyi merak ediyorsun?" autofocus>
+            <div class="search-area">
+                <input type="text" name="q" class="search-input" id="searchInput" autocomplete="off" placeholder="Bir şeyler ara..." autofocus>
                 <div id="suggestions"></div>
             </div>
 
-            <div class="button-group">
-                <a href="https://www.youtube.com" class="btn">YouTube</a>
-                <a href="https://github.com" class="btn">GitHub</a>
-                <a href="https://chatgpt.com" class="btn">ChatGPT</a>
-                <a href="https://web.whatsapp.com" class="btn">WhatsApp</a>
+            <div class="shortcut-grid">
+                <a href="https://www.youtube.com" class="glass-btn">YouTube</a>
+                <a href="https://www.instagram.com" class="glass-btn">Instagram</a>
+                <a href="https://chatgpt.com" class="glass-btn">ChatGPT</a>
+                <a href="https://github.com" class="glass-btn">GitHub</a>
             </div>
         </form>
     </div>
@@ -167,26 +183,24 @@
         const suggestionsBox = document.getElementById('suggestions');
         const searchForm = document.getElementById('searchForm');
 
-        // Google Suggest API Kullanımı
+        // Google Önerilerini Getir
         searchInput.addEventListener('input', () => {
             const query = searchInput.value;
             if (query.length > 0) {
-                // JSONP kullanarak Google önerilerini alıyoruz
                 const script = document.createElement('script');
-                script.src = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&callback=showSuggestions`;
+                script.src = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&callback=handleSuggestions`;
                 document.body.appendChild(script);
                 document.body.removeChild(script);
             } else {
-                suggestionsBox.style.display = 'none';
+                closeSuggestions();
             }
         });
 
-        // Önerileri ekrana basan fonksiyon
-        window.showSuggestions = (data) => {
+        window.handleSuggestions = (data) => {
             const suggestions = data[1];
             if (suggestions.length > 0) {
                 suggestionsBox.innerHTML = '';
-                suggestions.forEach(text => {
+                suggestions.slice(0, 6).forEach(text => { // İlk 6 öneriyi göster
                     const div = document.createElement('div');
                     div.className = 'suggestion-item';
                     div.textContent = text;
@@ -196,17 +210,31 @@
                     };
                     suggestionsBox.appendChild(div);
                 });
-                suggestionsBox.style.display = 'block';
+                openSuggestions();
             } else {
-                suggestionsBox.style.display = 'none';
+                closeSuggestions();
             }
         };
 
-        // Dışarı tıklayınca önerileri kapat
+        function openSuggestions() {
+            suggestionsBox.style.display = 'block';
+            // Küçük bir gecikme ile animasyonu tetikle
+            setTimeout(() => suggestionsBox.classList.add('show'), 10);
+        }
+
+        function closeSuggestions() {
+            suggestionsBox.classList.remove('show');
+            // Animasyon bitince display none yap
+            setTimeout(() => {
+                if (!suggestionsBox.classList.contains('show')) {
+                    suggestionsBox.style.display = 'none';
+                }
+            }, 300);
+        }
+
+        // Sayfa dışına tıklandığında kapat
         document.addEventListener('click', (e) => {
-            if (e.target !== searchInput) {
-                suggestionsBox.style.display = 'none';
-            }
+            if (e.target !== searchInput) closeSuggestions();
         });
     </script>
 
