@@ -3,186 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glassmorphism Arama</title>
+    <title>Mavi Glass Arama</title>
     <style>
-        /* 1. Arka Plan ve Temel Ayarlar */
+        /* 1. Arka Plan: Derin Mavi Gradyan */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Cam etkisinin belli olması için canlı bir arka plan şart */
-            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: linear-gradient(135deg, #004e92 0%, #000428 100%);
             overflow: hidden;
         }
 
-        /* Arka planın hareket etmesi için animasyon (isteğe bağlı) */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Arka plana yüzen bulanık daireler ekleyerek cam etkisini güçlendirelim */
-        body::before, body::after {
-            content: '';
+        /* Arka plan süslemeleri (Sıvı cam etkisi için) */
+        .circle {
             position: absolute;
-            width: 300px;
-            height: 300px;
             border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
             z-index: -1;
-            filter: blur(80px);
-            opacity: 0.6;
+            animation: move 20s infinite alternate;
         }
-        body::before {
-            background: #8fd3f4;
-            top: 10%;
-            left: 15%;
-        }
-        body::after {
-            background: #a6c0fe;
-            bottom: 10%;
-            right: 15%;
-        }
-
-        /* 2. Ana Cam Konteyner */
-        .glass-container {
-            /* Glassmorphism'in kalbi burası */
-            background: rgba(255, 255, 255, 0.25); /* Yarı saydam beyaz */
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Yumuşak gölge */
-            backdrop-filter: blur(10px); /* Arka planı bulanıklaştırma */
-            -webkit-backdrop-filter: blur(10px); /* Safari desteği */
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.4); /* Parlak kenarlık */
-            
-            text-align: center;
-            padding: 40px 30px;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        /* Logo */
-        .logo {
-            font-size: 50px;
-            font-weight: bold;
-            margin-bottom: 25px;
-            /* Logoyu cama uygun hale getirmek için hafif beyazlatıyoruz */
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        /* 3. Cam Arama Çubuğu */
-        .search-box-glass {
-            display: flex;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 5px 15px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-        }
+        .c1 { width: 400px; height: 400px; top: -10%; left: -10%; background: rgba(0, 122, 255, 0.2); }
+        .c2 { width: 300px; height: 300px; bottom: -5%; right: 5%; background: rgba(0, 255, 255, 0.1); }
         
-        .search-box-glass:hover, .search-box-glass:focus-within {
-             background: rgba(255, 255, 255, 0.5);
-             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        @keyframes move {
+            from { transform: translate(0, 0); }
+            to { transform: translate(50px, 100px); }
         }
 
-        .search-box-glass input {
-            flex: 1;
-            border: none;
-            background: transparent;
+        /* 2. Ana Konteyner */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            color: white;
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* 3. Arama Kutusu ve Öneriler */
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
             outline: none;
-            padding: 10px;
-            font-size: 16px;
-            color: #333;
-        }
-        .search-box-glass input::placeholder {
-            color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 18px;
+            box-sizing: border-box;
+            transition: 0.3s;
         }
 
-        /* 4. Etkileşimli Cam Butonlar */
-        .button-container {
+        .search-box::placeholder { color: rgba(255, 255, 255, 0.6); }
+
+        .search-box:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 122, 255, 0.5);
+        }
+
+        /* Öneriler Listesi (Dropdown) */
+        #suggestions {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            display: none;
+            z-index: 100;
+            text-align: left;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .suggestion-item {
+            padding: 12px 25px;
+            cursor: pointer;
+            color: #333;
+            border-bottom: 1px solid #eee;
+        }
+
+        .suggestion-item:last-child { border: none; }
+        .suggestion-item:hover { background: #e0f0ff; }
+
+        /* 4. Etkileşimli Butonlar */
+        .button-group {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
-        .glass-button {
+        .btn {
             text-decoration: none;
-            padding: 12px 24px;
+            color: white;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
-            font-weight: 500;
-            color: rgba(0, 0, 0, 0.8);
-            
-            /* Butonların kendi cam efekti */
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
-
-            /* Etkileşim animasyonları için geçiş ayarı */
+            font-size: 14px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(5px);
         }
 
-        /* Hover (Üzerine gelme) Efekti */
-        .glass-button:hover {
-            background: rgba(255, 255, 255, 0.6); /* Daha parlak */
-            transform: translateY(-3px); /* Hafifçe yukarı kalkar */
-            box-shadow: 0 8px 15px rgba(0,0,0,0.2); /* Gölge büyür */
-            color: #000;
-            border-color: rgba(255, 255, 255, 0.8);
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* Active (Tıklama) Efekti */
-        .glass-button:active {
-            transform: translateY(1px) scale(0.98); /* Aşağı iner ve hafifçe küçülür */
-            box-shadow: 0 2px 3px rgba(0,0,0,0.1); /* Gölge küçülür */
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Butonun içindeki parıltı efekti (isteğe bağlı) */
-        .glass-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
-        }
-        .glass-button:hover::before {
-            left: 100%;
-        }
+        .btn:active { transform: scale(0.95); }
 
     </style>
 </head>
 <body>
 
-    <div class="glass-container">
-        <div class="logo">Google</div>
+    <div class="circle c1"></div>
+    <div class="circle c2"></div>
 
-        <form action="https://www.google.com/search" method="GET">
-            <div class="search-box-glass">
-                <input type="text" name="q" placeholder="Web'de ara..." autofocus required>
+    <div class="glass-container">
+        <h1>Google</h1>
+        
+        <form action="https://www.google.com/search" method="GET" id="searchForm">
+            <div class="search-wrapper">
+                <input type="text" name="q" class="search-box" id="searchInput" autocomplete="off" placeholder="Neyi merak ediyorsun?" autofocus>
+                <div id="suggestions"></div>
             </div>
-            
-            <div class="button-container">
-                <a href="https://www.youtube.com" class="glass-button">YouTube</a>
-                <a href="https://www.reddit.com" class="glass-button">Reddit</a>
-                <a href="https://chat.openai.com" class="glass-button">ChatGPT</a>
-                <a href="https://www.netflix.com" class="glass-button">Netflix</a>
+
+            <div class="button-group">
+                <a href="https://www.youtube.com" class="btn">YouTube</a>
+                <a href="https://github.com" class="btn">GitHub</a>
+                <a href="https://chatgpt.com" class="btn">ChatGPT</a>
+                <a href="https://web.whatsapp.com" class="btn">WhatsApp</a>
             </div>
         </form>
     </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsBox = document.getElementById('suggestions');
+        const searchForm = document.getElementById('searchForm');
+
+        // Google Suggest API Kullanımı
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value;
+            if (query.length > 0) {
+                // JSONP kullanarak Google önerilerini alıyoruz
+                const script = document.createElement('script');
+                script.src = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&callback=showSuggestions`;
+                document.body.appendChild(script);
+                document.body.removeChild(script);
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+
+        // Önerileri ekrana basan fonksiyon
+        window.showSuggestions = (data) => {
+            const suggestions = data[1];
+            if (suggestions.length > 0) {
+                suggestionsBox.innerHTML = '';
+                suggestions.forEach(text => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.textContent = text;
+                    div.onclick = () => {
+                        searchInput.value = text;
+                        searchForm.submit();
+                    };
+                    suggestionsBox.appendChild(div);
+                });
+                suggestionsBox.style.display = 'block';
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        };
+
+        // Dışarı tıklayınca önerileri kapat
+        document.addEventListener('click', (e) => {
+            if (e.target !== searchInput) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+    </script>
 
 </body>
 </html>
