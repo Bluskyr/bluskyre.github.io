@@ -14,7 +14,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle at top right, #003366, #000428);
+            /* Arka plan daha açık tonlu bir mavi gradyanı olarak güncellendi */
+            background: radial-gradient(circle at top right, #004c99, #001f3f);
             overflow: hidden;
             color: white;
         }
@@ -47,6 +48,8 @@
             max-width: 650px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             text-align: center;
+            /* Arama çubuğunun düzgün hizalanması için */
+            box-sizing: border-box;
         }
 
         h1 {
@@ -63,10 +66,14 @@
         .search-area {
             position: relative;
             margin-bottom: 35px;
+            /* Tüm genişliği kaplaması ve hizalama için */
+            width: 100%;
         }
 
         .search-input {
+            /* Arama çubuğu taşmasını düzeltmek için */
             width: 100%;
+            box-sizing: border-box;
             padding: 18px 30px;
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -89,20 +96,20 @@
             top: 110%;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.1); /* Şeffaf cam */
-            backdrop-filter: blur(25px); /* Yüksek bulanıklık */
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* Öneriler daha görünür olması için arka plan ve bulanıklık artırıldı */
+            background: rgba(255, 255, 255, 0.2); /* Daha opak */
+            backdrop-filter: blur(30px); /* Daha fazla bulanıklık */
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 20px;
             overflow: hidden;
             z-index: 1000;
-            display: none; /* JS ile açılacak */
+            display: none;
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Öneriler görünür olduğunda çalışacak sınıf */
         #suggestions.show {
             display: block;
             opacity: 1;
@@ -113,13 +120,14 @@
             padding: 15px 25px;
             text-align: left;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.9);
+            /* Yazı rengi daha belirgin hale getirildi */
+            color: rgba(255, 255, 255, 0.95);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             transition: background 0.2s;
         }
 
         .suggestion-item:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
             color: #fff;
         }
 
@@ -183,7 +191,6 @@
         const suggestionsBox = document.getElementById('suggestions');
         const searchForm = document.getElementById('searchForm');
 
-        // Google Önerilerini Getir
         searchInput.addEventListener('input', () => {
             const query = searchInput.value;
             if (query.length > 0) {
@@ -200,7 +207,7 @@
             const suggestions = data[1];
             if (suggestions.length > 0) {
                 suggestionsBox.innerHTML = '';
-                suggestions.slice(0, 6).forEach(text => { // İlk 6 öneriyi göster
+                suggestions.slice(0, 6).forEach(text => {
                     const div = document.createElement('div');
                     div.className = 'suggestion-item';
                     div.textContent = text;
@@ -218,13 +225,11 @@
 
         function openSuggestions() {
             suggestionsBox.style.display = 'block';
-            // Küçük bir gecikme ile animasyonu tetikle
             setTimeout(() => suggestionsBox.classList.add('show'), 10);
         }
 
         function closeSuggestions() {
             suggestionsBox.classList.remove('show');
-            // Animasyon bitince display none yap
             setTimeout(() => {
                 if (!suggestionsBox.classList.contains('show')) {
                     suggestionsBox.style.display = 'none';
@@ -232,7 +237,6 @@
             }, 300);
         }
 
-        // Sayfa dışına tıklandığında kapat
         document.addEventListener('click', (e) => {
             if (e.target !== searchInput) closeSuggestions();
         });
