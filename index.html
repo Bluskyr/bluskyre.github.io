@@ -3,148 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linklerim | Mavi Liquid Glass</title>
+    <title>Linklerim | Light Blue Glass</title>
     <style>
-        /* Genel Ayarlar */
+        /* Tasarım Ayarları */
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --text-color: #1e3a8a; /* Koyu mavi metin (okunabilirlik için) */
+            --accent-blue: #3b82f6;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Mavi tema için çok koyu lacivert arka plan */
-            background: #000814; 
-            overflow: hidden;
-            color: white;
+            background: #f0f9ff; /* Çok açık mavi/beyaz zemin */
+            overflow-x: hidden;
+            padding: 20px;
         }
 
-        /* Arka Plan Sıvı Efektleri - MAVİ TEMA */
-        .background-blobs {
-            position: absolute;
+        /* Akışkan Arka Plan */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Bulanıklığı artırarak renklerin daha yumuşak karışmasını sağladık */
-            filter: blur(100px); 
+            filter: blur(60px);
         }
 
         .blob {
             position: absolute;
             border-radius: 50%;
-            animation: move 18s infinite alternate ease-in-out;
-            opacity: 0.8;
+            animation: move 25s infinite alternate ease-in-out;
         }
 
-        /* Blob 1: Parlak Mavi/Camgöbeği */
-        .blob1 { 
-            width: 450px; height: 450px; 
-            top: -15%; left: -15%; 
-            background: linear-gradient(to right, #0062ff, #00c6ff);
-        }
-        /* Blob 2: Derin Okyanus Mavisi/Lacivert */
-        .blob2 { 
-            width: 350px; height: 350px; 
-            bottom: -10%; right: -5%; 
-            background: linear-gradient(to left, #000428, #004e92);
-            animation-delay: -4s; 
-            animation-duration: 22s;
-        }
-        /* Blob 3: Orta Kısım Vurgu Mavisi */
-        .blob3 { 
-            width: 200px; height: 200px; 
-            top: 40%; left: 35%; 
-            background: #0ea5e9;
-            animation-delay: -8s; 
-        }
+        .blob1 { width: 500px; height: 500px; background: #bae6fd; top: -10%; left: -10%; }
+        .blob2 { width: 400px; height: 400px; background: #e0f2fe; bottom: -5%; right: -5%; animation-delay: -5s; }
+        .blob3 { width: 300px; height: 300px; background: #dbeafe; top: 30%; left: 20%; animation-delay: -10s; }
 
         @keyframes move {
-            from { transform: translate(0, 0) scale(1) rotate(0deg); }
-            to { transform: translate(80px, 40px) scale(1.15) rotate(20deg); }
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, 100px) scale(1.1); }
         }
 
-        /* Ana Cam Kart Konteynırı */
-        .glass-container {
-            /* Beyaz yerine çok hafif mavi tonlu cam efekti */
-            background: rgba(135, 206, 255, 0.05); 
-            backdrop-filter: blur(20px) saturate(150%); /* Saturate renkleri canlandırır */
-            -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-top: 1px solid rgba(255, 255, 255, 0.3); /* Üst kısım daha parlak */
-            border-radius: 30px;
-            padding: 40px;
-            width: 88%;
-            max-width: 420px;
+        /* Mobil Uyumlu Cam Kart */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 40px 24px;
+            width: 100%;
+            max-width: 400px; /* Bilgisayarda çok genişlemez */
             text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 10, 40, 0.5); /* Gölgeyi de maviye çaldık */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
 
-        .profile-img {
-            width: 110px;
-            height: 110px;
+        /* Profil Alanı */
+        .profile-section {
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid rgba(135, 206, 255, 0.3);
             object-fit: cover;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 4px solid white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 16px;
         }
 
-        h1 { font-size: 1.6rem; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.5px; }
-        p { font-size: 0.95rem; opacity: 0.8; margin-bottom: 35px; color: #dbeafe; }
+        h1 {
+            font-size: 1.4rem;
+            color: var(--text-color);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
 
-        /* Link Butonları */
-        .links { display: flex; flex-direction: column; gap: 15px; }
-
-        .link-item {
-            display: block;
-            padding: 14px;
-            color: white;
-            text-decoration: none;
-            /* Butonlar için daha belirgin cam arka planı */
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            transition: all 0.3s ease;
+        p {
+            font-size: 0.9rem;
+            color: #64748b;
             font-weight: 500;
-            position: relative;
-            overflow: hidden;
         }
 
-        /* Hover efekti: Mavi parlama */
-        .link-item:hover {
-            background: rgba(135, 206, 255, 0.2); /* Maviye çalan beyaz hover */
-            transform: translateY(-4px) scale(1.02);
-            border-color: rgba(135, 206, 255, 0.5);
-            box-shadow: 0 4px 15px rgba(0, 100, 255, 0.2); /* Mavi gölge */
+        /* Link Listesi */
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            text-decoration: none;
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+        }
+
+        /* Mobil Dokunma Efekti ve Hover */
+        .link-button:active, .link-button:hover {
+            background: white;
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
+            border-color: var(--accent-blue);
+        }
+
+        /* İkonlar için küçük bir alan (İsteğe bağlı) */
+        .link-button i {
+            margin-right: 10px;
+        }
+
+        /* Mobil ekran ayarı */
+        @media (max-width: 480px) {
+            .card {
+                padding: 30px 20px;
+            }
+            h1 { font-size: 1.25rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="background-blobs">
+    <div class="liquid-bg">
         <div class="blob blob1"></div>
         <div class="blob blob2"></div>
         <div class="blob blob3"></div>
     </div>
 
-    <div class="glass-container">
-        <img src="https://ui-avatars.com/api/?name=Mavi+Tema&background=0062ff&color=fff&size=150" alt="Profil" class="profile-img">
-        
-        <h1>@MaviKullanici</h1>
-        <p>Mavi Temalı Liquid Glass Tasarımı</p>
-
-        <div class="links">
-            <a href="#" class="link-item" target="_blank">Ana Sayfam</a>
-            <a href="#" class="link-item" target="_blank">Instagram Hesabım</a>
-            <a href="#" class="link-item" target="_blank">Twitter (X)</a>
-            <a href="#" class="link-item" target="_blank">Linkedin Profilim</a>
-            <a href="mailto:mail@ornek.com" class="link-item">Bana E-posta Gönder</a>
+    <div class="card">
+        <div class="profile-section">
+            <img src="https://ui-avatars.com/api/?name=User&background=3b82f6&color=fff&size=200" alt="Profil Resmi" class="profile-pic">
+            
+            <h1>Adınız Soyadınız</h1>
+            <p>@kullaniciadin</p>
         </div>
+
+        <nav class="link-list">
+            <a href="#" class="link-button">🌐 Web Sitem</a>
+            <a href="#" class="link-button">📸 Instagram</a>
+            <a href="#" class="link-button">🐦 Twitter / X</a>
+            <a href="#" class="link-button">💼 LinkedIn</a>
+            <a href="https://wa.me/numaraniz" class="link-button">💬 WhatsApp</a>
+        </nav>
     </div>
 
 </body>
