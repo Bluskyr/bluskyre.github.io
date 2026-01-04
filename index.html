@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#00f7ff">
 
     <style>
@@ -27,21 +27,32 @@
             text-align: center;
         }
 
+        /* RGB NEON ANİMASYON */
+        @keyframes rgbGlow {
+            0%   { box-shadow: 0 0 10px #ff004c, 0 0 25px #ff004c; }
+            25%  { box-shadow: 0 0 10px #00f7ff, 0 0 25px #00f7ff; }
+            50%  { box-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14; }
+            75%  { box-shadow: 0 0 10px #b400ff, 0 0 25px #b400ff; }
+            100% { box-shadow: 0 0 10px #ff004c, 0 0 25px #ff004c; }
+        }
+
+        /* PROFİL FOTO */
         .avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
             border: 3px solid #00f7ff;
-            box-shadow: 0 0 25px #00f7ff;
-            margin-bottom: 15px;
             object-fit: cover;
+            margin-bottom: 15px;
+            animation: rgbGlow 4s infinite linear;
         }
 
         h1 {
             margin-bottom: 25px;
-            text-shadow: 0 0 10px #00f7ff;
+            text-shadow: 0 0 12px #00f7ff;
         }
 
+        /* LİNK BUTONLARI */
         a {
             display: block;
             margin: 12px 0;
@@ -52,24 +63,30 @@
             border: 2px solid #00f7ff;
             font-weight: bold;
             letter-spacing: 1px;
-            box-shadow: 0 0 10px rgba(0,247,255,0.5);
+            background: rgba(0,0,0,0.6);
+            animation: rgbGlow 6s infinite linear;
             transition: 0.3s;
         }
 
         a:hover {
-            background: #00f7ff;
-            color: black;
-            box-shadow: 0 0 25px #00f7ff;
-            transform: scale(1.05);
+            background: black;
+            color: white;
+            transform: scale(1.07);
+            animation: rgbGlow 1.2s infinite linear;
+        }
+
+        /* HAREKET AZALTMA (telefon dostu) */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- PROFİL FOTO -->
-    <img src="avatar.jpg" class="avatar">
-
+    <img src="/avatar.jpg" class="avatar">
     <h1>Enes</h1>
 
     <a href="https://instagram.com" target="_blank">Instagram</a>
@@ -79,9 +96,9 @@
 </div>
 
 <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js');
-    }
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+}
 </script>
 
 </body>
