@@ -5,57 +5,84 @@
     <title>Linklerim</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00f7ff">
+
     <style>
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top, #0f2027, #000);
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
         }
 
         .container {
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
         }
 
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #00f7ff;
+            box-shadow: 0 0 25px #00f7ff;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
         h1 {
-            color: white;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px #00f7ff;
         }
 
         a {
             display: block;
-            text-decoration: none;
-            background: #ffffff;
-            color: #000;
+            margin: 12px 0;
             padding: 15px;
-            margin: 10px 0;
-            border-radius: 12px;
+            border-radius: 14px;
+            text-decoration: none;
+            color: #00f7ff;
+            border: 2px solid #00f7ff;
             font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(0,247,255,0.5);
             transition: 0.3s;
         }
 
         a:hover {
-            background: #00c6ff;
-            color: white;
-            transform: scale(1.03);
+            background: #00f7ff;
+            color: black;
+            box-shadow: 0 0 25px #00f7ff;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🔗 Linklerim</h1>
+    <!-- PROFİL FOTO -->
+    <img src="avatar.jpg" class="avatar">
 
-    <a href="https://instagram.com/" target="_blank">Instagram</a>
-    <a href="https://github.com/" target="_blank">GitHub</a>
-    <a href="https://discord.com/" target="_blank">Discord</a>
-    <a href="https://youtube.com/" target="_blank">YouTube</a>
+    <h1>Enes</h1>
+
+    <a href="https://instagram.com" target="_blank">Instagram</a>
+    <a href="https://github.com" target="_blank">GitHub</a>
+    <a href="https://discord.com" target="_blank">Discord</a>
+    <a href="https://youtube.com" target="_blank">YouTube</a>
 </div>
+
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
+</script>
 
 </body>
 </html>
