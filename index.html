@@ -3,21 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linklerim | Light Blue Glass</title>
+    <title>Linklerim | Ultimate Liquid Glass</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Tasarım Ayarları */
+        /* Renk Değişkenleri (Temaya Göre Değişir) */
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --text-color: #1e3a8a; /* Koyu mavi metin (okunabilirlik için) */
-            --accent-blue: #3b82f6;
+            --bg-color: #e0f2fe;
+            --text-color: #1e3a8a;
+            --card-bg: rgba(255, 255, 255, 0.35);
+            --btn-bg: rgba(255, 255, 255, 0.4);
+            --border-color: rgba(255, 255, 255, 0.5);
+            --blob-1: #bae6fd;
+            --blob-2: #7dd3fc;
+            --blob-3: #93c5fd;
+        }
+
+        /* Karanlık Mod Değişkenleri */
+        body.dark-mode {
+            --bg-color: #020617;
+            --text-color: #f1f5f9;
+            --card-bg: rgba(15, 23, 42, 0.5);
+            --btn-bg: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.15);
+            --blob-1: #1e3a8a;
+            --blob-2: #1e40af;
+            --blob-3: #1d4ed8;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background 0.4s ease, color 0.4s ease;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
@@ -25,124 +43,155 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f0f9ff; /* Çok açık mavi/beyaz zemin */
+            background-color: var(--bg-color);
             overflow-x: hidden;
             padding: 20px;
         }
 
-        /* Akışkan Arka Plan */
+        /* Arka Plan Blobs */
         .liquid-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            filter: blur(60px);
+            filter: blur(80px);
         }
 
         .blob {
             position: absolute;
             border-radius: 50%;
-            animation: move 25s infinite alternate ease-in-out;
+            animation: move 20s infinite alternate ease-in-out;
         }
-
-        .blob1 { width: 500px; height: 500px; background: #bae6fd; top: -10%; left: -10%; }
-        .blob2 { width: 400px; height: 400px; background: #e0f2fe; bottom: -5%; right: -5%; animation-delay: -5s; }
-        .blob3 { width: 300px; height: 300px; background: #dbeafe; top: 30%; left: 20%; animation-delay: -10s; }
+        .blob1 { width: 400px; height: 400px; background: var(--blob-1); top: -10%; left: -10%; }
+        .blob2 { width: 350px; height: 350px; background: var(--blob-2); bottom: 10%; right: -5%; animation-delay: -5s; }
+        .blob3 { width: 250px; height: 250px; background: var(--blob-3); top: 40%; left: 30%; animation-delay: -10s; }
 
         @keyframes move {
             from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(50px, 100px) scale(1.1); }
+            to { transform: translate(60px, 40px) scale(1.2); }
         }
 
-        /* Mobil Uyumlu Cam Kart */
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 40px 24px;
+        /* Tema Değiştirici Buton */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 12px;
+            border-radius: 50%;
+            border: none;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            color: var(--text-color);
+            cursor: pointer;
+            z-index: 100;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Ana Kart */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 35px;
+            padding: 40px 25px;
             width: 100%;
-            max-width: 400px; /* Bilgisayarda çok genişlemez */
+            max-width: 380px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
         }
 
-        /* Profil Alanı */
-        .profile-section {
-            margin-bottom: 30px;
-        }
-
-        .profile-pic {
-            width: 120px;
-            height: 120px;
+        /* Profil Resmi */
+        .profile-img {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid white;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-            margin-bottom: 16px;
+            border: 3px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
         }
 
-        h1 {
-            font-size: 1.4rem;
-            color: var(--text-color);
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
+        h1 { font-size: 1.5rem; color: var(--text-color); margin-bottom: 5px; }
+        p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 30px; color: var(--text-color); }
 
-        p {
-            font-size: 0.9rem;
-            color: #64748b;
-            font-weight: 500;
-        }
+        /* Liquid Glass Butonlar */
+        .links-container { display: flex; flex-direction: column; gap: 15px; }
 
-        /* Link Listesi */
-        .link-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .link-button {
+        .link-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 16px;
+            padding: 16px 20px;
             text-decoration: none;
             color: var(--text-color);
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
+            background: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
             font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
         }
 
-        /* Mobil Dokunma Efekti ve Hover */
-        .link-button:active, .link-button:hover {
-            background: white;
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
-            border-color: var(--accent-blue);
+        /* Butonun içindeki akışkan efekt */
+        .link-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            transition: 0.5s;
+            pointer-events: none;
         }
 
-        /* İkonlar için küçük bir alan (İsteğe bağlı) */
-        .link-button i {
-            margin-right: 10px;
+        .link-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
-        /* Mobil ekran ayarı */
-        @media (max-width: 480px) {
-            .card {
-                padding: 30px 20px;
-            }
-            h1 { font-size: 1.25rem; }
+        body.dark-mode .link-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .link-btn i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+        }
+
+        /* Alt Sosyal İkonlar */
+        .social-icons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--text-color);
+            font-size: 1.4rem;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Mobil Optimizasyon */
+        @media (max-width: 400px) {
+            .glass-card { padding: 30px 20px; }
+            .link-btn { padding: 14px 18px; }
         }
     </style>
 </head>
 <body>
+
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i id="theme-icon" class="fas fa-moon"></i>
+    </button>
 
     <div class="liquid-bg">
         <div class="blob blob1"></div>
@@ -150,23 +199,42 @@
         <div class="blob blob3"></div>
     </div>
 
-    <div class="card">
-        <div class="profile-section">
-            <img src="https://raw.githubusercontent.com/Bluskyr/bluskyre.github.io/refs/heads/main/img.png" alt="Profil Resmi" class="profile-pic">
-            
-            <h1>Adınız Soyadınız</h1>
-            <p>@kullaniciadin</p>
+    <div class="glass-card">
+        <img src="img.png" alt="Profil" class="profile-img">
+        
+        <h1>Kullanıcı Adı</h1>
+        <p>Dijital Tasarımcı & Geliştirici</p>
+
+        <div class="links-container">
+            <a href="#" class="link-btn"><i class="fas fa-globe"></i> Web Sitem</a>
+            <a href="#" class="link-btn"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="#" class="link-btn"><i class="fab fa-twitter"></i> Twitter / X</a>
+            <a href="#" class="link-btn"><i class="fab fa-youtube"></i> YouTube</a>
+            <a href="mailto:merhaba@site.com" class="link-btn"><i class="fas fa-envelope"></i> E-posta</a>
         </div>
 
-        <nav class="link-list">
-            <a href="#" class="link-button">🌐 Web Sitem</a>
-            <a href="#" class="link-button">📸 Instagram</a>
-            <a href="#" class="link-button">🐦 Twitter / X</a>
-            <a href="#" class="link-button">💼 LinkedIn</a>
-            <a href="https://wa.me/numaraniz" class="link-button">💬 WhatsApp</a>
-        </nav>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
     </div>
 
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+    </script>
 </body>
 </html>
-
