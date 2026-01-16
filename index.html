@@ -233,9 +233,29 @@
                 icon.classList.add('fa-moon');
             }
         }
+                const titleText = "BLUSKYRE";
+        let index = 0;
+        let isDeleting = false;
+
+        function animateTitle() {
+            const currentText = titleText.substring(0, index);
+            document.title = currentText || "|";
+
+            if (!isDeleting && index < titleText.length) {
+                index++;
+                setTimeout(animateTitle, 300);
+            } else if (isDeleting && index > 0) {
+                index--;
+                setTimeout(animateTitle, 150);
+            } else {
+                isDeleting = !isDeleting;
+                setTimeout(animateTitle, 2000); // Bittiğinde 2 saniye bekle
+            }
+        }
     </script>
 </body>
 </html>
+
 
 
 
