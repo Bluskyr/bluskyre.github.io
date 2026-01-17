@@ -20,22 +20,34 @@ function animateTitle() {
 }
 animateTitle();
 
-// 2. GLOBAL GÖRÜNTÜLENME SAYACI
+// 2. GLOBAL SAYAÇ (CounterAPI.dev - Daha Stabil)
 async function updateViews() {
     const countEl = document.getElementById('view-count');
+    // Benzersiz bir anahtar oluşturduk: bluskyre_official_2026
+    const namespace = "bluskyre_site_2026"; 
+    const key = "visits";
+
     try {
-        // GitHub Pages ile en uyumlu ve hızlı çalışan servis
-        const response = await fetch('https://api.countapi.xyz/hit/bluskyre-unique-page/visits');
+        // 'cache: no-store' ekleyerek GitHub'ın eski sayıyı göstermesini engelliyoruz
+        const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/hit`, {
+            cache: "no-store"
+        });
+        
+        if (!response.ok) throw new Error();
+
         const data = await response.json();
-        countEl.innerText = data.value + " Görüntülenme";
+        countEl.innerText = data.count + " Görüntülenme";
     } catch (err) {
-        // Hata durumunda (AdBlock vb.) yerel sayacı çalıştır
-        let localV = localStorage.getItem('v_count') || 0;
-        localV++;
-        localStorage.setItem('v_count', localV);
-        countEl.innerText = localV + " Görüntülenme";
+        // API o an çalışmazsa kullanıcıya çirkin bir görüntü vermemek için:
+        countEl.innerText = "Bağlanıyor..."; 
+        console.log("Sayaç servisi şu an meşgul.");
+        
+        // 3 saniye sonra tekrar dene (Otomatik tazeleme)
+        setTimeout(updateViews, 3000);
     }
 }
+
+// Sayfa yüklenince çalıştır
 updateViews();
 
 // 3. TEMA DEĞİŞTİRME
