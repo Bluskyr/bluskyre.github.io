@@ -180,39 +180,9 @@
         <i class="fas fa-eye"></i> <span id="view-count">...</span> Görüntülenme
     </div>
 
-    <script>
-        src="script.js"
-        // 1. BAŞLIK ANİMASYONU (Harf harf yazılıp silinen)
-        const titleText = "BLUSKYRE";
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function animateTitle() {
-            const currentTitle = titleText.substring(0, charIndex);
-            document.title = currentTitle || "|";
-
-            if (!isDeleting && charIndex < titleText.length) {
-                charIndex++;
-                setTimeout(animateTitle, 300);
-            } else if (isDeleting && charIndex > 0) {
-                charIndex--;
-                setTimeout(animateTitle, 150);
-            } else {
-                isDeleting = !isDeleting;
-                setTimeout(animateTitle, 2000);
-            }
-        }
-        animateTitle();
-
-        // 3. TEMA DEĞİŞTİRME
-        function toggleTheme() {
-            const body = document.body;
-            const icon = document.getElementById('theme-icon');
-            body.classList.toggle('dark-mode');
-            icon.classList.toggle('fa-moon');
-            icon.classList.toggle('fa-sun');
-        }
-    </script>
+<script src="script.js"></script>
+    
 </body>
 </html>
+
 
