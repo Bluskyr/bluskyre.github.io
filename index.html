@@ -181,6 +181,7 @@
     </div>
 
     <script>
+        src="script.js"
         // 1. BAŞLIK ANİMASYONU (Harf harf yazılıp silinen)
         const titleText = "BLUSKYRE";
         let charIndex = 0;
@@ -203,20 +204,6 @@
         }
         animateTitle();
 
-        // 2. GLOBAL SAYAÇ (Herkes aynı sayıyı görür)
-        // 'bluskyre_profile' kısmını değiştirerek sayacı sıfırlayabilirsin.
-        async function getViews() {
-            try {
-                const key = "bluskyre_unique_counter_2024";
-                const response = await fetch(`https://api.counterapi.dev/v1/bluskyre/hit`);
-                const data = await response.json();
-                document.getElementById('view-count').innerText = data.count;
-            } catch (err) {
-                document.getElementById('view-count').innerText = "Hata";
-            }
-        }
-        getViews();
-
         // 3. TEMA DEĞİŞTİRME
         function toggleTheme() {
             const body = document.body;
@@ -228,3 +215,4 @@
     </script>
 </body>
 </html>
+
