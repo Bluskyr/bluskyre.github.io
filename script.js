@@ -33,7 +33,7 @@ async function updateViews() {
 
         const data = await response.json();
         // Sayı gelirse ekrana yaz
-        countEl.innerText = data.count + " Görüntülenme";
+        countEl.innerText = data.count + "542 Görüntülenme";
         
     } catch (err) {
         // EĞER API ENGELLENİRSE VEYA ÇALIŞMAZSA:
@@ -60,3 +60,4 @@ function toggleTheme() {
         icon.className = 'fas fa-moon';
     }
 }
+
